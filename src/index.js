@@ -7,5 +7,7 @@ app.use(express.json())
 app.use(cors())
 app.use("/api/",citasRouter)
 
-app.listen(5000)
-console.log("Server running in the port 3000")
+app.listen(5000,()=>{
+
+    console.log("Cargando en el servidor  5000")
+})
