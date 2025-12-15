@@ -19,10 +19,6 @@ if(rows.length<=0 || rows.length===0){
  res.json(rows) 
 }
 
-
-
-
-
 export const ObtenerInformacionMedicoPorIdHorario=async(req,res)=>{
 
 

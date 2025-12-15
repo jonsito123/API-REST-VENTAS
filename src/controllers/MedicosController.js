@@ -6,6 +6,9 @@ export const ObtenerInfomacionMedico=async(req,res)=>{
 
    const IdMedico=req.params.id;
 
+   res.send({
+    msg:"Not found"
+   })
    
 }
 

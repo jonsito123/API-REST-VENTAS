@@ -86,7 +86,7 @@ try {
         })
         var resultadoCorrecto=await transporte.sendMail({
 
-            to:[Correo,"jonathan.gallardo@fresnos.pe"],
+            to:[Correo],
             subject:"¡Reserva Confirmada!:",
             html:`
                 <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
