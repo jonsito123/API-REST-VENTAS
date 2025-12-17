@@ -44,7 +44,5 @@ export const EnviarCorreo=(PacienteNombres,PacienteApellidos,Correo)=>{
             to: Correo, // list of receivers
             subject:"Correo enviado correctamente" , // Subject line
             html: mensajeHtml
-        }).then(info => {
-        console.log({info});
-        }).catch(console.error);
+        })
 }
