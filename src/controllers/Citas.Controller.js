@@ -63,19 +63,20 @@ try {
          const FechaHorario=date.toLocaleDateString("en-GB")
 
 
+         var emisor='ecuevah70@gmail.com'
           var transporte=nodemailer.createTransport({
 
                 service:"gmail",
                 port:465,
                 auth:{
 
-                user:'ecuevah70@gmail.com',
+                user:emisor,
                 pass:"adyzchdpswbaydrk"
 
                 }
         })
         await transporte.sendMail({
-
+            from:emisor,
             to:[Correo],
             subject:"¡Reserva Confirmada!:",
             html:`
