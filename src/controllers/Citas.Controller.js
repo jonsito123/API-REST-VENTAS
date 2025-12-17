@@ -56,17 +56,7 @@ try {
         const [result] =await  pool.query("select  HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,Concat(M.Apellidos,'  ', M.Nombres) as Doctor,E.Descripcion AS Especialidad from HorariosMedico as HM  inner join Medico as M  on M.id_medico=HM.id_medico inner join Especialidad as E ON E.id_especialidad=M.id_especialidad where HM.id_Horario=?",[id_Horario]);
        /*enviar el corroe*/
         /*que pasa que si inserto correctamente*/ 
-          res.send({
-
-                id:rows.insertId,
-                PacienteNombres,
-                PacienteApellidos,
-                FechaCreacion,
-                NumeroDocumento,
-                mensaje:"Cita Recibida Correctamente.Recibirá un correo de confirmación."
-
-            })
-
+         
          var doctor=result[0]
          /*conversion de horario*/
          var  date = new Date(doctor.FechaHorario);
@@ -84,7 +74,7 @@ try {
 
                 }
         })
-        var resultadoCorrecto=await transporte.sendMail({
+        await transporte.sendMail({
 
             to:[Correo],
             subject:"¡Reserva Confirmada!:",
@@ -149,7 +139,17 @@ try {
         })
 
                 /*vamos enviar el correo y enviar la respuesta*/
-          
+
+        res.send({
+
+            id:rows.insertId,
+            PacienteNombres,
+            PacienteApellidos,
+            FechaCreacion,
+            NumeroDocumento,
+            mensaje:"Cita Recibida Correctamente.Recibirá un correo de confirmación."
+
+        })
 
 }catch(error){
 

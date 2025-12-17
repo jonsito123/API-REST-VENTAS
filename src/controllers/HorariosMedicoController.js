@@ -37,3 +37,24 @@ if(rows.length<=0 || rows.length===0){
  res.json(rows) 
 }
 
+
+
+export const ObtenerHorariosPorFechaMedico=async(req,res)=>{
+
+var Fecha=req.body.FechaHorario;
+const IdMedico=req.body.IdMedico
+Fecha=new Date(Fecha)
+
+
+
+const [rows] =await  pool.query("select  HM.id_Horario,M.id_medico,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,Concat(M.Apellidos,'  ', M.Nombres) as Doctor,E.Descripcion AS Especialidad from HorariosMedico as HM  inner join Medico as M  on M.id_medico=HM.id_medico inner join Especialidad as E ON E.id_especialidad=M.id_especialidad where HM.FechaHorario=? and M.id_medico=?",[Fecha,IdMedico]);
+
+if(rows.length<=0 || rows.length===0){
+     return res.status(404).json({ 
+            mensaje: "No existe medico con ese ID" 
+        }); 
+
+}
+
+ res.json(rows) 
+}
