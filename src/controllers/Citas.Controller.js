@@ -1,5 +1,6 @@
 import { pool } from "../db/conexion.js";
-import  nodemailer from "nodemailer";
+import { Resend } from "resend";
+import { EnviarCorreo } from "../functions/notificacionCorreo.js";
 
 
 
@@ -25,6 +26,8 @@ export const GetCitas=async(req,res)=>{
 export const CrearCita=async(req,res)=>{
 try {
    
+    /*paquete para enviar email*/
+    const resend = new Resend('re_c7NGYVyR_MkX6RieYcQveKfwQQmtCVWCy');
 
     const body=req.body;
     const id_Horario=body.id_Horario
@@ -43,15 +46,6 @@ try {
        const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo) VALUES(?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo])
        
         /*correo base de mi emisor*/
-      
-         if(!rows.insertId) {
-
-            return res.status(500).json({
-            mensaje:"Error",
-            error:"Error al insertar el registro"
-            })
-        }
-
         /*obtener informacion medico */
         const [result] =await  pool.query("select  HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,Concat(M.Apellidos,'  ', M.Nombres) as Doctor,E.Descripcion AS Especialidad from HorariosMedico as HM  inner join Medico as M  on M.id_medico=HM.id_medico inner join Especialidad as E ON E.id_especialidad=M.id_especialidad where HM.id_Horario=?",[id_Horario]);
        /*enviar el corroe*/
@@ -59,92 +53,26 @@ try {
          
          var doctor=result[0]
          /*conversion de horario*/
-         var  date = new Date(doctor.FechaHorario);
-         const FechaHorario=date.toLocaleDateString("en-GB")
+        var  date = new Date(doctor.FechaHorario);
+        const FechaHorario=date.toLocaleDateString("en-GB")
+        
 
+        /*enviar email*/
 
-         var emisor='ecuevah70@gmail.com'
-          var transporte=nodemailer.createTransport({
+        if(!rows.insertId) {
 
-                service:"gmail",
-                port:465,
-                auth:{
-
-                user:emisor,
-                pass:"adyzchdpswbaydrk"
-
-                }
-        })
-        await transporte.sendMail({
-            from:emisor,
-            to:[Correo],
-            subject:"¡Reserva Confirmada!:",
-            html:`
-                <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
-                <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
-                    <h2 style="margin: 0;">Reserva Confirmada</h2>
-                    <p style="margin: 5px 0 0 0; font-size: 14px;">Clínica Los Fresnos</p>
-                </div>
-                <div style="padding: 20px;">
-                    <p>Estimado(a) <strong>${PacienteNombres} ${PacienteApellidos}</strong>,</p>
-                    <p>Su cita médica ha sido registrada exitosamente. A continuación encontrará todos los detalles de su reserva:</p>
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
-                    <tr style="background-color: #f8fafc;">
-                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0;">
-                        <strong style="color: #0369a1; text-transform: uppercase;">1. Datos del Paciente</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Nombre Completo:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${PacienteNombres} ${PacienteApellidos}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Documento Identidad:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">
-                        ${TipoDocumento} - ${NumeroDocumento}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Celular Contacto:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Celular}</td>
-                    </tr>
-                    <tr style="background-color: #f8fafc;">
-                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0; padding-top: 15px;">
-                        <strong style="color: #0369a1; text-transform: uppercase;">2. Detalles de la Cita</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Especialidad:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${doctor.Especialidad}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Médico Tratante:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">Dr ${doctor.Doctor}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Fecha Programada:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500; color: #0284c7;">${FechaHorario}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Horario Atención:</td>
-                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${doctor.HoraInicio}-${doctor.HoraFin}</td>
-                    </tr>
-                    </table>
-                    <div style="margin-top: 25px; padding: 10px; background-color: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 12px; color: #92400e;">
-                    <strong>Importante:</strong> Por favor preséntese 15 minutos antes de su cita. Es obligatorio portar su documento de identidad físico para la admisión..
-                    </div>
-                </div>
-                </div>
-                    
-            ` 
-        })
-
-        /*cerrar el transporador*/ 
-
-        transporte.close();
+            return res.status(500).json({
+            mensaje:"Error",
+            error:"Error al insertar el registro"
+            })
+        }
+        
+        EnviarCorreo(PacienteNombres,PacienteApellidos,Correo)
+        
 
         /*vamos enviar el correo y enviar la respuesta*/
-
+ 
+       
         res.send({
 
             id:rows.insertId,
@@ -152,9 +80,13 @@ try {
             PacienteApellidos,
             FechaCreacion,
             NumeroDocumento,
-            mensaje:"Cita Recibida Correctamente.Recibirá un correo de confirmación."
+            mensaje:"No se puedo enviar su detalle confirmación,se esta comunicando por el numero de celuar"
 
         })
+        
+      
+
+       
 
 }catch(error){
 
