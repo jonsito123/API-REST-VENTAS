@@ -66,7 +66,7 @@ try {
           var transporte=nodemailer.createTransport({
 
                 service:"gmail",
-                port:587,
+                port:465,
                 auth:{
 
                 user:'ecuevah70@gmail.com',
@@ -138,7 +138,11 @@ try {
             ` 
         })
 
-                /*vamos enviar el correo y enviar la respuesta*/
+        /*cerrar el transporador*/ 
+
+        transporte.close();
+
+        /*vamos enviar el correo y enviar la respuesta*/
 
         res.send({
 
