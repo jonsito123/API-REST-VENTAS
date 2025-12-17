@@ -1,6 +1,6 @@
 import { pool } from "../db/conexion.js";
 import { Resend } from "resend";
-import { EnviarCorreo } from "../functions/notificacionCorreo.js";
+import { EnviarCorreo } from "../functions/CorreoNotificacion.js";
 
 
 
