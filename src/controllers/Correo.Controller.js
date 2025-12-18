@@ -1,15 +1,24 @@
+
 import nodemailer from "nodemailer"
+
 const transporter=nodemailer.createTransport({
+    service:"gmail",
     host:"smtp.gmail.com",
     port:587,
+    requireTLS:true,
     auth:{
         user:"ecuevah70@gmail.com",
         pass:"adyzchdpswbaydrk"
     }
 })
 
-export const EnviarCorreo=(PacienteNombres,PacienteApellidos,Correo)=>{
 
+export const EnviarCorreo=async(req,res)=>{
+
+  const PacienteNombres=req.body.PacienteNombres
+  const PacienteApellidos=req.body.PacienteApellidos
+  const Correo=req.body.Correo
+  var resultado=false
  let mensajeHtml=`
                 <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
                     <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
@@ -39,10 +48,25 @@ export const EnviarCorreo=(PacienteNombres,PacienteApellidos,Correo)=>{
             ` 
 
          
-        transporter.sendMail({
+    await transporter.sendMail({
             from: '"Pretwor" <youremail@gmail.com>', // sender address
             to: Correo, // list of receivers
             subject:"Correo enviado correctamente" , // Subject line
             html: mensajeHtml
+        }).then(()=>{
+        
+            resultado=true
+            
+        }).catch((error)=>{
+            if(error){
+                resultado=false
+            }
         })
+
+
+        res.send({
+            Resultado:resultado
+        })
+
+ 
 }

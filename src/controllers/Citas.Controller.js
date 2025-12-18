@@ -1,6 +1,6 @@
 import { pool } from "../db/conexion.js";
 import { Resend } from "resend";
-import { EnviarCorreo } from "../functions/CorreoNotificacion.js";
+
 
 
 
@@ -86,8 +86,7 @@ try {
         
       
         /*que lo lea nomas */
-        EnviarCorreo(PacienteNombres,PacienteApellidos,Correo)
-
+       
        
 
 }catch(error){
