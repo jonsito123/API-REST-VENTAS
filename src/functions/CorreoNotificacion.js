@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"
 const transporter=nodemailer.createTransport({
-    host:"smtp.gmail.com",
+    host:"smtp.sendlayer.net",
     port:587,
     auth:{
         user:"ecuevah70@gmail.com",
@@ -8,7 +8,7 @@ const transporter=nodemailer.createTransport({
     }
 })
 
-export const EnviarCorreo=(PacienteNombres,PacienteApellidos,Correo)=>{
+export const EnviarCorreo=async(PacienteNombres,PacienteApellidos,Correo)=>{
 
  let mensajeHtml=`
                 <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
@@ -38,11 +38,17 @@ export const EnviarCorreo=(PacienteNombres,PacienteApellidos,Correo)=>{
                     
             ` 
 
-         transporter.verify().then(console.log).catch(console.error);
-         transporter.sendMail({
+         
+    await  transporter.sendMail({
             from: '"Pretwor" <youremail@gmail.com>', // sender address
             to: Correo, // list of receivers
             subject:"Correo enviado correctamente" , // Subject line
             html: mensajeHtml
+        }).then(()=>{
+
+            console.log("CorrectamenteEnviado")
+        })
+        .catch((error)=>{
+            console.log("No se envio correctamente el error",error)
         })
 }
