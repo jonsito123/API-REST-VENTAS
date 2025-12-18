@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"
 const transporter=nodemailer.createTransport({
-    host:"smtp.sendlayer.net",
+    host:"smtp.gmail.com",
     port:587,
     auth:{
         user:"ecuevah70@gmail.com",
@@ -39,16 +39,10 @@ export const EnviarCorreo=async(PacienteNombres,PacienteApellidos,Correo)=>{
             ` 
 
          
-    await  transporter.sendMail({
+      await  transporter.sendMail({
             from: '"Pretwor" <youremail@gmail.com>', // sender address
             to: Correo, // list of receivers
             subject:"Correo enviado correctamente" , // Subject line
             html: mensajeHtml
-        }).then(()=>{
-
-            console.log("CorrectamenteEnviado")
-        })
-        .catch((error)=>{
-            console.log("No se envio correctamente el error",error)
         })
 }
