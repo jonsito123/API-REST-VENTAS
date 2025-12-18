@@ -67,7 +67,7 @@ try {
             })
         }
         
-      await  EnviarCorreo(PacienteNombres,PacienteApellidos,Correo)
+        
         
 
         /*vamos enviar el correo y enviar la respuesta*/
@@ -85,6 +85,8 @@ try {
         })
         
       
+        /*que lo lea nomas */
+        EnviarCorreo(PacienteNombres,PacienteApellidos,Correo)
 
        
 

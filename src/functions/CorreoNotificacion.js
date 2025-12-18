@@ -8,7 +8,7 @@ const transporter=nodemailer.createTransport({
     }
 })
 
-export const EnviarCorreo=async(PacienteNombres,PacienteApellidos,Correo)=>{
+export const EnviarCorreo=(PacienteNombres,PacienteApellidos,Correo)=>{
 
  let mensajeHtml=`
                 <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
@@ -39,7 +39,7 @@ export const EnviarCorreo=async(PacienteNombres,PacienteApellidos,Correo)=>{
             ` 
 
          
-      await  transporter.sendMail({
+        transporter.sendMail({
             from: '"Pretwor" <youremail@gmail.com>', // sender address
             to: Correo, // list of receivers
             subject:"Correo enviado correctamente" , // Subject line
