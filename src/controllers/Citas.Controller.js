@@ -9,7 +9,7 @@ export const GetCitas=async(req,res)=>{
     try {
      
 
-        const [result] =await  pool.query("select C.id_Cita,C.FechaCreacion,C.PacienteNombres,C.PacienteApellidos,C.TipoDocumento,C.NumeroDocumento,C.Celular,HM.FechaHorario,E.Descripcion, M.Nombres,M.Apellidos from Citas as C inner join HorariosMedico as HM ON HM.id_Horario=C.id_Horario inner join Medico as M ON M.id_medico=HM.id_medico INNER JOIN Especialidad E on E.id_especialidad=M.id_especialidad ORDER by C.id_Cita");
+        const [result] =await  pool.query("select C.id_Cita,C.FechaCreacion,C.PacienteNombres,C.PacienteApellidos,C.TipoDocumento,C.NumeroDocumento,C.Celular,HM.FechaHorario,E.Descripcion as Especialidad,CONCAT(M.Nombres, ' ', M.Apellidos) AS Medico from Citas as C inner join HorariosMedico as HM ON HM.id_Horario=C.id_Horario inner join Medico as M ON M.id_medico=HM.id_medico INNER JOIN Especialidad E on E.id_especialidad=M.id_especialidad ORDER by C.id_Cita");
         
         res.send(result)
 
