@@ -3,7 +3,7 @@ import { GetCitas,CrearCita, EliminarEmpleado, ObtenerCita, ActualizarEmpleado }
 import { GetEspecialidades } from "../controllers/EspecialidadController.js";
 import { ObtenerInfomacionMedico, ObtenerMedicosEspecialidad } from "../controllers/MedicosController.js";
 import { ObtenerHorariosMedico, ObtenerHorariosPorFechaMedico } from "../controllers/HorariosMedicoController.js";
-import { CrearHorarioMedico } from "../controllers/HorarioController.js";
+import { CrearHorarioMedico, GetHorariosMedicos } from "../controllers/HorarioController.js";
 import { EnviarCorreo } from "../controllers/Correo.Controller.js";
 const router=Router();
 
@@ -17,6 +17,7 @@ router.get("/Especialidades",GetEspecialidades)
 router.get("/Medicos/:id",ObtenerInfomacionMedico)
 router.get("/MedicosEspecialidad/:id",ObtenerMedicosEspecialidad)
 router.post("/Horario",CrearHorarioMedico)
+router.get("/HorariosMedico",GetHorariosMedicos)
 router.get("/HorariosMedico/:id",ObtenerHorariosMedico)
 router.post("/HorariosMedicoFecha",ObtenerHorariosPorFechaMedico)
 router.post("/EnviarCorreo",EnviarCorreo)
