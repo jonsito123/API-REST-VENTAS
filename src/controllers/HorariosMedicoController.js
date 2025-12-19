@@ -1,9 +1,6 @@
 import { pool } from "../db/conexion.js";
 
 
-
-
-
 export const ObtenerHorariosMedico=async(req,res)=>{
 
 
