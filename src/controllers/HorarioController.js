@@ -1,6 +1,24 @@
 import { pool } from "../db/conexion.js";
 
 
+export const GetHorariosMedicos=async(req,res)=>{
+
+      try {
+     
+
+        const [result] =await  pool.query("select HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,CONCAT(M.Apellidos,' ' ,M.Nombres) AS Medico,E.Descripcion as Especialidad from HorariosMedico as HM inner join Medico AS M ON M.id_medico=HM.id_medico inner join Especialidad as E on M.id_especialidad=E.id_especialidad");
+        
+        res.send(result)
+
+    }catch(error){
+
+        return res.status(500).json({
+            mensaje:"Error"
+        })
+    }
+}
+
+
 export const CrearHorarioMedico=async(req,res)=>{
 
 
