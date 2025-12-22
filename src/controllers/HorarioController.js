@@ -6,7 +6,7 @@ export const GetHorarios=async(req,res)=>{
       try {
      
 
-        const [result] =await  pool.query("select HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,CONCAT(M.Apellidos,' ' ,M.Nombres) AS Medico,M.id_medico,E.Descripcion as Especialidad from HorariosMedico as HM inner join Medico AS M ON M.id_medico=HM.id_medico inner join Especialidad as E on M.id_especialidad=E.id_especialidad");
+        const [result] =await  pool.query("select HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,CONCAT(M.Apellidos,' ' ,M.Nombres) AS Medico,M.id_medico,E.Descripcion as Especialidad from HorariosMedico as HM inner join Medico AS M ON M.id_medico=HM.id_medico inner join Especialidad as E on M.id_especialidad=E.id_especialidad order by id_Horario desc");
         
         res.send(result)
 
@@ -77,3 +77,53 @@ export const CrearHorarioMedico=async(req,res)=>{
 
    
 }
+
+export const ActualizarHorario=async(req,res)=>{
+
+
+    const IdHorario=req.params.id
+
+
+    const HorarioAtencion=req.body.HorarioAtencion;
+    const HorarioInicio=req.body.HorarioInicio;
+    const HorarioFin=req.body.HorarioFin;
+    const Cupos=req.body.Cupos;
+    
+    
+   
+  
+    try {
+
+    const [rows]=await pool.query("update HorariosMedico set FechaHorario=?,HoraInicio=?,HoraFin=?,Cupos=? where id_Horario=?",[HorarioAtencion,HorarioInicio,HorarioFin,Cupos,IdHorario])
+
+    if(!rows.affectedRows) {
+
+                return res.status(500).json({
+                mensaje:"Error",
+                error:"Error al actualizar el horario por fabor verificar"
+                })
+        }   
+        res.send({
+
+            id:rows.affectedRows,
+            mensaje:"Se actualizo correctamente el horario"
+
+        })
+    
+
+    }catch(e){
+      
+        res.send({
+            rpta:"Not fund insert"
+        })
+    }
+   
+
+
+   
+}
+
+
+
+
+
