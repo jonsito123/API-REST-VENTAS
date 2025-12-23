@@ -40,21 +40,27 @@ try {
     const Celular=body.Celular;
 
     
- 
-
+    /*consultar horario obteneido*/
+    const [horario] =await  pool.query("SELECT * FROM HorariosMedico WHERE id_Horario=?",[id_Horario]);
     
-       const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo) VALUES(?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo])
+    const Horario=horario[0];
+
+    const HoraInicio=Horario.HoraInicio
+    const HoraFin=Horario.HoraFin
+    const FechaHorario=Horario.FechaHorario
+     
+    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin) VALUES(?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin])
        
         /*correo base de mi emisor*/
         /*obtener informacion medico */
-        const [result] =await  pool.query("select  HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,Concat(M.Apellidos,'  ', M.Nombres) as Doctor,E.Descripcion AS Especialidad from HorariosMedico as HM  inner join Medico as M  on M.id_medico=HM.id_medico inner join Especialidad as E ON E.id_especialidad=M.id_especialidad where HM.id_Horario=?",[id_Horario]);
+       // const [result] =await  pool.query("select  HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,Concat(M.Apellidos,'  ', M.Nombres) as Doctor,E.Descripcion AS Especialidad from HorariosMedico as HM  inner join Medico as M  on M.id_medico=HM.id_medico inner join Especialidad as E ON E.id_especialidad=M.id_especialidad where HM.id_Horario=?",[id_Horario]);
        /*enviar el corroe*/
         /*que pasa que si inserto correctamente*/ 
          
-         var doctor=result[0]
+        //var doctor=result[0]
          /*conversion de horario*/
-        var  date = new Date(doctor.FechaHorario);
-        const FechaHorario=date.toLocaleDateString("en-GB")
+        //var  date = new Date(doctor.FechaHorario);
+       // const FechaHorario=date.toLocaleDateString("en-GB")
         
 
         /*enviar email*/

@@ -3,7 +3,7 @@ import { GetCitas,CrearCita, EliminarEmpleado, ObtenerCita, ActualizarEmpleado }
 import { GetEspecialidades } from "../controllers/EspecialidadController.js";
 import { ObtenerInfomacionMedico, ObtenerMedicosEspecialidad } from "../controllers/MedicosController.js";
 import { ObtenerHorariosMedico, ObtenerHorariosPorFechaMedico } from "../controllers/HorariosMedicoController.js";
-import { ActualizarHorario, CrearHorarioMedico, GetHorarioId, GetHorarios} from "../controllers/HorarioController.js";
+import { ActualizarHorario, CrearHorarioMedico, GetHorario, GetHorarioId, GetHorarios} from "../controllers/HorarioController.js";
 import { EnviarCorreo } from "../controllers/Correo.Controller.js";
 const router=Router();
 
@@ -18,6 +18,8 @@ router.get("/Medicos/:id",ObtenerInfomacionMedico)
 router.get("/MedicosEspecialidad/:id",ObtenerMedicosEspecialidad)
 /*obtener horario para panal administracion*/ 
 router.get("/Horarios",GetHorarios)
+router.get("/HorarioEspecifico/:id",GetHorario)
+/*Horario con informacion */
 router.get("/Horario/:id",GetHorarioId)
 router.put("/Horario/:id",ActualizarHorario )
 router.post("/Horario",CrearHorarioMedico)
