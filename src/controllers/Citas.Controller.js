@@ -41,15 +41,14 @@ try {
 
     
     /*consultar horario obteneido*/
-    const [horario] =await  pool.query("SELECT * FROM HorariosMedico WHERE id_Horario=?",[id_Horario]);
+    const [horario] =await  pool.query("SELECT FechaHorario,HoraInicio,HoraFin FROM HorariosMedico WHERE id_Horario=?",[id_Horario]);
     
     const Horario=horario[0];
-
-    const HoraInicio=Horario.HoraInicio
-    const HoraFin=Horario.HoraFin
-    const FechaHorario=Horario.FechaHorario
-     
-    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin) VALUES(?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin])
+    
+    var FechaHorario=Horario.FechaHorario.toISOString().split("T")[0]
+    var HoraInicio=Horario.HoraInicio
+    var HoraFin=Horario.HoraFin
+    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin) VALUES(?,?,?,?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin])
        
         /*correo base de mi emisor*/
         /*obtener informacion medico */
@@ -64,7 +63,7 @@ try {
         
 
         /*enviar email*/
-
+console.log(rows)
         if(!rows.insertId) {
 
             return res.status(500).json({
