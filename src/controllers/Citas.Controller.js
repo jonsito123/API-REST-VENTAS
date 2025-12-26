@@ -1,5 +1,6 @@
 import { pool } from "../db/conexion.js";
 import { Resend } from "resend";
+import { enviarEmailConfiguracion } from "../Services/mailService.js";
 
 
 
@@ -27,7 +28,6 @@ export const CrearCita=async(req,res)=>{
 try {
    
     /*paquete para enviar email*/
-    const resend = new Resend('re_c7NGYVyR_MkX6RieYcQveKfwQQmtCVWCy');
 
     const body=req.body;
     const id_Horario=body.id_Horario
@@ -56,12 +56,12 @@ try {
        /*enviar el corroe*/
         /*que pasa que si inserto correctamente*/ 
          
-        //var doctor=result[0]
+        //var
          /*conversion de horario*/
         //var  date = new Date(doctor.FechaHorario);
        // const FechaHorario=date.toLocaleDateString("en-GB")
-        
-
+       const mail=await enviarEmailConfiguracion(Correo)
+     
         /*enviar email*/
         if(!rows.insertId) {
 
@@ -71,12 +71,8 @@ try {
             })
         }
         
-        
-        
 
-        /*vamos enviar el correo y enviar la respuesta*/
- 
-       
+        /*respuesta correcta*/ 
         res.send({
 
             id:rows.insertId,
@@ -91,6 +87,8 @@ try {
       
         /*que lo lea nomas */
        
+       /*enviar el correo ultimi*/
+
        
 
 }catch(error){
