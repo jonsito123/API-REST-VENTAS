@@ -1,8 +1,7 @@
 import { pool } from "../db/conexion.js";
-import { Resend } from "resend";
-import { enviarEmailConfiguracion } from "../Services/mailService.js";
+import {Resend} from "resend"
 
-
+const resend = new Resend("re_2dtQfq2M_Pdtc4piKUtJaJ6MafXQkszDd");
 
 
 export const GetCitas=async(req,res)=>{
@@ -60,7 +59,6 @@ try {
          /*conversion de horario*/
         //var  date = new Date(doctor.FechaHorario);
        // const FechaHorario=date.toLocaleDateString("en-GB")
-       const mail=await enviarEmailConfiguracion(Correo)
      
         /*enviar email*/
         if(!rows.insertId) {
@@ -71,6 +69,13 @@ try {
             })
         }
         
+    const data = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
+      to: [Correo],
+      subject: 'Hello World',
+      html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+     
+    });
 
         /*respuesta correcta*/ 
         res.send({
