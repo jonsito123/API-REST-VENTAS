@@ -40,18 +40,20 @@ try {
 
     
     /*consultar horario obteneido*/
-    const [horario] =await  pool.query("SELECT FechaHorario,HoraInicio,HoraFin FROM HorariosMedico WHERE id_Horario=?",[id_Horario]);
+    const [horario] =await  pool.query("SELECT FechaHorario,HoraInicio,HoraFin,CONCAT(M.Apellidos,',',M.Nombres) AS Medico,E.Descripcion AS Especialidad FROM HorariosMedico HM inner join Medico as M on M.id_medico=HM.id_medico inner join Especialidad as E on E.id_especialidad=M.id_especialidad WHERE HM.id_Horario=?",[id_Horario]);
     
     const Horario=horario[0];
     
     var FechaHorario=Horario.FechaHorario.toISOString().split("T")[0]
     var HoraInicio=Horario.HoraInicio
     var HoraFin=Horario.HoraFin
+    var Medico=Horario.Medico
+    var Especialidad=Medico.Especialidad
     const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin) VALUES(?,?,?,?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin])
        
         /*correo base de mi emisor*/
         /*obtener informacion medico */
-        const [result] =await  pool.query("select  HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,Concat(M.Apellidos,'  ', M.Nombres) as Doctor,E.Descripcion AS Especialidad from HorariosMedico as HM  inner join Medico as M  on M.id_medico=HM.id_medico inner join Especialidad as E ON E.id_especialidad=M.id_especialidad where HM.id_Horario=?",[id_Horario]);
+        
        /*enviar el corroe*/
         /*que pasa que si inserto correctamente*/ 
 
@@ -97,6 +99,27 @@ try {
                     <tr>
                         <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Celular Contacto:</td>
                         <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Celular}</td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0; padding-top: 15px;">
+                        <strong style="color: #0369a1; text-transform: uppercase;">2. Detalles de la Cita</strong>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Especialidad:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Especialidad}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Médico Tratante:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">Dr ${Medico}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Fecha Programada:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500; color: #0284c7;">${FechaHorario}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Horario Atención:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${HoraInicio}-${HoraFin}</td>
                     </tr>
                     </table>
                     <div style="margin-top: 25px; padding: 10px; background-color: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 12px; color: #92400e;">
