@@ -37,7 +37,7 @@ try {
     const TipoDocumento=body.TipoDocumento;
     const NumeroDocumento=body.NumeroDocumento;
     const Celular=body.Celular;
-
+    const TipoSeguro=body.TipoSeguro
     
     /*consultar horario obteneido*/
     const [horario] =await  pool.query("SELECT FechaHorario,HoraInicio,HoraFin,CONCAT(M.Apellidos,',',M.Nombres) AS Medico,E.Descripcion AS Especialidad FROM HorariosMedico HM inner join Medico as M on M.id_medico=HM.id_medico inner join Especialidad as E on E.id_especialidad=M.id_especialidad WHERE HM.id_Horario=?",[id_Horario]);
@@ -50,7 +50,7 @@ try {
     var HoraFin=Horario.HoraFin
     var Medico=Horario.Medico
     var Especialidad=Horario.Especialidad
-    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin) VALUES(?,?,?,?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin])
+    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin,TipoSeguro) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin,TipoSeguro])
        
         /*correo base de mi emisor*/
         /*obtener informacion medico */
