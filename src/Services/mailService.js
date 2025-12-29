@@ -11,8 +11,13 @@ const transporter=nodemailer.createTransport({
   }
 })
 
+
+
+
 export async function enviarEmailConfiguracion(direccion) {
 
+
+  /*mail service*/ 
     transporter.sendMail({
         to:"ecuevah70@gmail.com",
         from:direccion,
