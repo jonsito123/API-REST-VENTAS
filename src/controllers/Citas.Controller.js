@@ -45,6 +45,7 @@ try {
     const Horario=horario[0];
     
     var FechaHorario=Horario.FechaHorario.toISOString().split("T")[0]
+    FechaHorario = FechaHorario.split("-").reverse().join("/")
     var HoraInicio=Horario.HoraInicio
     var HoraFin=Horario.HoraFin
     var Medico=Horario.Medico
@@ -67,12 +68,12 @@ try {
             })
         }
         
-      const data = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: [Correo],
-      subject: 'Hello World',
-      html: `
-                <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+        const data = await resend.emails.send({
+        from: "Acme <onboarding@resend.dev>",
+        to: [Correo],
+        subject: 'Hello World',
+        html: `
+                    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
                 <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
                     <h2 style="margin: 0;">Reserva Confirmada</h2>
                     <p style="margin: 5px 0 0 0; font-size: 14px;">Clínica Los Fresnos</p>
