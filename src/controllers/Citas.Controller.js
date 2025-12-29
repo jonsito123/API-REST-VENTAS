@@ -31,10 +31,7 @@ try {
     const body=req.body;
     const id_Horario=body.id_Horario
     const Correo=body.Correo
-    const FechaCreacion=new Date()
-    FechaCreacion=FechaCreacion.toLocaleDateString('es-PE', { 
-        timeZone: 'America/Lima' 
-    })
+    var FechaCreacion=new Date()
     const PacienteNombres=body.PacienteNombres
     const PacienteApellidos=body.PacienteApellidos;
     const TipoDocumento=body.TipoDocumento;
