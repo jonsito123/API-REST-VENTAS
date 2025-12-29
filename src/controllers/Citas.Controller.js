@@ -31,7 +31,7 @@ try {
     const body=req.body;
     const id_Horario=body.id_Horario
     const Correo=body.Correo
-    var FechaCreacion=new Date()
+    var FechaCreacion=new Date() 
     const PacienteNombres=body.PacienteNombres
     const PacienteApellidos=body.PacienteApellidos;
     const TipoDocumento=body.TipoDocumento;
