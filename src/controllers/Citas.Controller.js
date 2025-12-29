@@ -45,7 +45,7 @@ try {
     const Horario=horario[0];
     
     var FechaHorario=Horario.FechaHorario.toISOString().split("T")[0]
-    FechaHorario = FechaHorario.split("-").reverse().join("/")
+    
     var HoraInicio=Horario.HoraInicio
     var HoraFin=Horario.HoraFin
     var Medico=Horario.Medico
@@ -54,7 +54,7 @@ try {
        
         /*correo base de mi emisor*/
         /*obtener informacion medico */
-        
+    FechaHorario = FechaHorario.split("-").reverse().join("/")   
        /*enviar el corroe*/
         /*que pasa que si inserto correctamente*/ 
 
