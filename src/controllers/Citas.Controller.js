@@ -79,7 +79,7 @@ try {
 
 
          
-      const result=await  transporter.sendMail({
+      const result=transporter.sendMail({
             from:"noresponder@clinicalosfresnos.com.pe",
             to:Correo,
             subject:"Reserva de Citas Clinica",
