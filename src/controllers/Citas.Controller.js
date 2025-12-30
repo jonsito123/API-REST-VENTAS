@@ -1,6 +1,6 @@
 import { pool } from "../db/conexion.js";
 import {Resend} from "resend"
-
+import nodemialder from "nodemailer"
 const resend = new Resend("re_2dtQfq2M_Pdtc4piKUtJaJ6MafXQkszDd");
 
 
@@ -58,6 +58,15 @@ try {
        /*enviar el corroe*/
         /*que pasa que si inserto correctamente*/ 
 
+        const transporter = nodemialder.createTransport({
+        host: "mail.clinicalosfresnos.com.pe",
+        port: 465,
+        secure: true, // Use true for port 465, false for port 587
+        auth: {
+            user: "noresponder@clinicalosfresnos.com.pe",
+            pass: "Fresnos2026$",
+        },
+        });
      
         /*enviar email*/
         if(!rows.insertId) {
@@ -67,12 +76,14 @@ try {
             error:"Error al insertar el registro"
             })
         }
-        
-        const data = await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
-        to: [Correo],
-        subject: 'Hello World',
-        html: `
+
+
+         
+      const result=await  transporter.sendMail({
+            from:"noresponder@clinicalosfresnos.com.pe",
+            to:Correo,
+            subject:"Reserva de Citas Clinica",
+            html:`
                     <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
                 <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
                     <h2 style="margin: 0;">Reserva Confirmada</h2>
@@ -130,9 +141,8 @@ try {
                 </div>
                     
             ` 
-     
-    });
-
+        })
+        
         /*respuesta correcta*/ 
         res.send({
 
@@ -140,8 +150,7 @@ try {
             PacienteNombres,
             PacienteApellidos,
             FechaCreacion,
-            NumeroDocumento,
-            mensaje:"No se puedo enviar su detalle confirmación,se esta comunicando por el numero de celuar"
+            NumeroDocumento
 
         })
         
