@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 /*const resend = new Resend("re_2dtQfq2M_Pdtc4piKUtJaJ6MafXQkszDd");*/
 
 dotenv.config()
+
 import brevo from "@getbrevo/brevo"
 /*proteger las variables de entorno*/ 
 const apiInstance=new brevo.TransactionalEmailsApi();
