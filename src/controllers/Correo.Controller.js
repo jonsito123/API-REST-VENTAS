@@ -49,7 +49,7 @@ export const EnviarCorreo=async(req,res)=>{
 
          
     await transporter.sendMail({
-            from: '"Pretwor" <youremail@gmail.com>', // sender address
+            from: "Pretwor <youremail@gmail.com>", // sender address
             to: Correo, // list of receivers
             subject:"Correo enviado correctamente" , // Subject line
             html: mensajeHtml

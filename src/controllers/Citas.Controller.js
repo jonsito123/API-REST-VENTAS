@@ -1,8 +1,16 @@
 import { pool } from "../db/conexion.js";
-import {Resend} from "resend"
+/*import {Resend} from "resend"*/
+import dotenv from "dotenv"
+/*const resend = new Resend("re_2dtQfq2M_Pdtc4piKUtJaJ6MafXQkszDd");*/
 
-const resend = new Resend("re_2dtQfq2M_Pdtc4piKUtJaJ6MafXQkszDd");
-
+dotenv.config()
+import brevo from "@getbrevo/brevo"
+/*proteger las variables de entorno*/ 
+const apiInstance=new brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(
+    brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.KEY_API
+)
 
 export const GetCitas=async(req,res)=>{
 
@@ -68,7 +76,79 @@ try {
             })
         }
         
+         /*ENVIO DE CORREO*/
 
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+        sendSmtpEmail.subject = "Reserva Citas Final";
+        sendSmtpEmail.to = [
+        { email: Correo, name:PacienteNombres},
+        //   { email: "fazttech@gmail.com", name: "Joe Mcmillan" },
+        ];
+        sendSmtpEmail.htmlContent =`
+                    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+                <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
+                    <h2 style="margin: 0;">Reserva Confirmada</h2>
+                    <p style="margin: 5px 0 0 0; font-size: 14px;">Clínica Los Fresnos</p>
+                </div>
+                <div style="padding: 20px;">
+                    <p>Estimado(a) <strong>${PacienteNombres} ${PacienteApellidos}</strong>,</p>
+                    <p>Su cita médica ha sido registrada exitosamente. A continuación encontrará todos los detalles de su reserva:</p>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
+                    <tr style="background-color: #f8fafc;">
+                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0;">
+                        <strong style="color: #0369a1; text-transform: uppercase;">1. Datos del Paciente</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Nombre Completo:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${PacienteNombres} ${PacienteApellidos}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Documento Identidad:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">
+                        ${TipoDocumento} - ${NumeroDocumento}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Celular Contacto:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Celular}</td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0; padding-top: 15px;">
+                        <strong style="color: #0369a1; text-transform: uppercase;">2. Detalles de la Cita</strong>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Especialidad:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Especialidad}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Médico Tratante:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">Dr ${Medico}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Fecha Programada:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500; color: #0284c7;">${FechaHorario}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Horario Atención:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${HoraInicio}-${HoraFin}</td>
+                    </tr>
+                    </table>
+                    <div style="margin-top: 25px; padding: 10px; background-color: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 12px; color: #92400e;">
+                    <strong>Importante:</strong> Por favor preséntese 15 minutos antes de su cita. Es obligatorio portar su documento de identidad físico para la admisión..
+                    </div>
+                </div>
+                </div>
+                    
+            `
+        sendSmtpEmail.sender = {
+        name: "ClinicaLosFresnos",
+        email: "ecuevah70@gmail.com",
+        };
+
+      const result =apiInstance.sendTransacEmail(sendSmtpEmail);
         /*respuesta correcta*/ 
         res.send({
 
@@ -80,8 +160,7 @@ try {
             mensaje:"No se puedo enviar su detalle confirmación,se esta comunicando por el numero de celuar"
 
         })
-        
-      
+     
         /*que lo lea nomas */
        
        /*enviar el correo ultimi*/
