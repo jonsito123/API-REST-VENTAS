@@ -144,10 +144,10 @@ try {
                 </div>
                     
             `
-     /*   sendSmtpEmail.sender = {
+       sendSmtpEmail.sender = {
         name: "ClinicaLosFresnos",
         email: "ecuevah70@gmail.com",
-        };*/
+        }
 
       const result =apiInstance.sendTransacEmail(sendSmtpEmail);
         /*respuesta correcta*/ 
