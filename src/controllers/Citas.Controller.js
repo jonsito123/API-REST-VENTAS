@@ -149,7 +149,7 @@ try {
         email: "noresponder@clinicalosfresnos.com.pe",
         }
 
-      const result =apiInstance.sendTransacEmail(sendSmtpEmail);
+      const result =await apiInstance.sendTransacEmail(sendSmtpEmail);
         /*respuesta correcta*/ 
         res.send({
 
