@@ -146,7 +146,7 @@ try {
             `
        sendSmtpEmail.sender = {
         name: "ClinicaLosFresnos",
-        email: "ecuevah70@gmail.com",
+        email: "noresponder@clinicalosfresnos.com.pe",
         }
 
       const result =apiInstance.sendTransacEmail(sendSmtpEmail);
