@@ -226,9 +226,9 @@ res.status(204).json({
 export const ActualizarEstadoCita=async(req,res)=>{
 
 const id=req.params.id
+const Monto=req.body.Monto
 
-
-const [result]=await pool.query("update Citas set Estado=1 where id_Cita=?",[id])
+const [result]=await pool.query("update Citas set Estado=1,Monto=? where id_Cita=?",[Monto,id])
 
 if(result.affectedRows===0){
 
