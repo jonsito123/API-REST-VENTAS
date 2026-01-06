@@ -149,7 +149,7 @@ try {
         email: "noresponder@clinicalosfresnos.com.pe",
         }
 
-      const result =await apiInstance.sendTransacEmail(sendSmtpEmail);
+      const result =await   apiInstance.sendTransacEmail(sendSmtpEmail);
         /*respuesta correcta*/ 
         res.send({
 
@@ -223,29 +223,29 @@ res.status(204).json({
 
 }
 
-export const ActualizarEmpleado=async(req,res)=>{
+export const ActualizarEstadoCita=async(req,res)=>{
 
-const {id}=req.params.id
-const {Nombres,Apellidos,Dni,Telefono,Turno,FechaCita}=req.body;
+const id=req.params.id
 
-const [result]=pool.query("update Citas Set Nombres=?,Apellidos=?,Dni=?,Telefono=?,Turno=?,FechaCita=? WHERE IdCita=?",
-    [Nombres,Apellidos,Dni,Telefono,Turno,FechaCita,id]
-)
+
+const [result]=await pool.query("update Citas set Estado=1 where id_Cita=?",[id])
 
 if(result.affectedRows===0){
 
-    return res.status(4040).json({
+    return res.status(404).json({
 
         message:"Citas no encontrada ni actualizada"
     })
 
 }
+else {
+
+     return res.status(200).json({
+
+        message:"Cita actualizada correctamente"
+    })
+}
 
 
-/*es decir la geurra*/
-
-const [rows] =await  pool.query("Select * from Citas Where IdCita=?",[id]);
-
-res.json(rows)
 
 }
