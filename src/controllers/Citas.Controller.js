@@ -227,8 +227,9 @@ export const ActualizarEstadoCita=async(req,res)=>{
 
 const id=req.params.id
 const Monto=req.body.Monto
+const Consultorio=req.body.Consultorio    
 
-const [result]=await pool.query("update Citas set Estado=1,Monto=? where id_Cita=?",[Monto,id])
+const [result]=await pool.query("update Citas set Estado=1,Monto=?,Consultorio=? where id_Cita=?",[Monto,Consultorio,id])
 
 if(result.affectedRows===0){
 
