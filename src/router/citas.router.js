@@ -4,7 +4,7 @@ import { GetEspecialidades } from "../controllers/EspecialidadController.js";
 import { ObtenerInfomacionMedico, ObtenerMedicosEspecialidad } from "../controllers/MedicosController.js";
 import { ObtenerHorariosMedico, ObtenerHorariosPorFechaMedico } from "../controllers/HorariosMedicoController.js";
 import { ActualizarHorario, CrearHorarioMedico, GetHorario, GetHorarioId, GetHorarios} from "../controllers/HorarioController.js";
-import { EnviarCorreo } from "../controllers/Correo.Controller.js";
+
 const router=Router();
 
 
@@ -25,7 +25,7 @@ router.post("/Horario",CrearHorarioMedico)
 
 router.get("/HorariosMedico/:id",ObtenerHorariosMedico)
 router.post("/HorariosMedicoFecha",ObtenerHorariosPorFechaMedico)
-router.post("/EnviarCorreo",EnviarCorreo)
+
 
 /*actualizar el estado de la cita*/
 
