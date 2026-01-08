@@ -19,7 +19,7 @@ export const GetCitas=async(req,res)=>{
      
         /*consulta resta api para Fresalud*/
 
-        const [result] =await  pool.query("select C.id_Cita,C.FechaCreacion,C.Consultorio,C.Estado,C.Monto,C.TipoSeguro,C.PacienteNombres,C.PacienteApellidos,C.Correo,C.TipoDocumento,C.NumeroDocumento,C.Celular,C.FechaHorario,C.HoraInicio,C.HoraFin,E.Descripcion as Especialidad,CONCAT(M.Nombres, ' ', M.Apellidos) AS Medico from Citas as C inner join HorariosMedico as HM ON HM.id_Horario=C.id_Horario inner join Medico as M ON M.id_medico=HM.id_medico INNER JOIN Especialidad E on E.id_especialidad=M.id_especialidad ORDER by C.FechaHorario desc");
+        const [result] =await  pool.query("select C.id_Cita,C.FechaCreacion,C.Consultorio,C.Estado,C.Monto,C.TipoSeguro,C.PacienteNombres,C.PacienteApellidos,C.Correo,C.TipoDocumento,C.NumeroDocumento,C.Celular,C.FechaHorario,C.HoraInicio,C.HoraFin,E.Descripcion as Especialidad,CONCAT(M.Nombres, ' ', M.Apellidos) AS Medico,M.IdMedicoFresalud from Citas as C inner join HorariosMedico as HM ON HM.id_Horario=C.id_Horario inner join Medico as M ON M.id_medico=HM.id_medico INNER JOIN Especialidad E on E.id_especialidad=M.id_especialidad ORDER by C.FechaHorario desc");
         
         res.send(result)
 
