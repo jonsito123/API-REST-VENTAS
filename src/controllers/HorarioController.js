@@ -45,7 +45,7 @@ export const GetHorarios=async(req,res)=>{
       try {
      
 
-        const [result] =await  pool.query("select HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,CONCAT(M.Apellidos,' ' ,M.Nombres) AS Medico,M.id_medico,E.Descripcion as Especialidad from HorariosMedico as HM inner join Medico AS M ON M.id_medico=HM.id_medico inner join Especialidad as E on M.id_especialidad=E.id_especialidad order by id_Horario desc");
+        const [result] =await  pool.query("select HM.id_Horario,HM.FechaHorario,HM.HoraInicio,HM.HoraFin,HM.Cupos,CONCAT(M.Apellidos,' ' ,M.Nombres) AS Medico,M.CMP,M.id_medico,E.Descripcion as Especialidad from HorariosMedico as HM inner join Medico AS M ON M.id_medico=HM.id_medico inner join Especialidad as E on M.id_especialidad=E.id_especialidad order by id_Horario desc");
         
         res.send(result)
 
