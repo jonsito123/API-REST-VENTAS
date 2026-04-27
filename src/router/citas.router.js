@@ -1,10 +1,10 @@
 import {Router} from "express"
-import { GetCitas,CrearCita, EliminarEmpleado, ObtenerCita,ActualizarEstadoCita } from "../controllers/Citas.Controller.js";
+import { GetCitas,CrearCita, EliminarEmpleado, ObtenerCita, ActualizarEstadoCita } from "../controllers/Citas.Controller.js";
 import { GetEspecialidades } from "../controllers/EspecialidadController.js";
 import { ObtenerInfomacionMedico, ObtenerMedicosEspecialidad } from "../controllers/MedicosController.js";
 import { ObtenerHorariosMedico, ObtenerHorariosPorFechaMedico } from "../controllers/HorariosMedicoController.js";
 import { ActualizarHorario, CrearHorarioMedico, GetHorario, GetHorarioId, GetHorarios} from "../controllers/HorarioController.js";
-/*ActualizarEstadoCita*/
+
 const router=Router();
 
 
