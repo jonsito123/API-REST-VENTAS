@@ -17,8 +17,9 @@ export const GetCitas=async(req,res)=>{
 
     try {
      
+        /*consulta resta api para Fresalud*/
 
-        const [result] =await  pool.query("select C.id_Cita,C.FechaCreacion,C.Estado,C.TipoSeguro,C.PacienteNombres,C.PacienteApellidos,C.Correo,C.TipoDocumento,C.NumeroDocumento,C.Celular,C.FechaHorario,C.HoraInicio,C.HoraFin,E.Descripcion as Especialidad,CONCAT(M.Nombres, ' ', M.Apellidos) AS Medico from Citas as C inner join HorariosMedico as HM ON HM.id_Horario=C.id_Horario inner join Medico as M ON M.id_medico=HM.id_medico INNER JOIN Especialidad E on E.id_especialidad=M.id_especialidad ORDER by C.id_Cita desc");
+        const [result] =await  pool.query("select C.id_Cita,C.FechaCreacion,C.Consultorio,C.Estado,C.Monto,C.TipoSeguro,C.PacienteNombres,C.PacienteApellidos,C.Correo,C.TipoDocumento,C.NumeroDocumento,C.Celular,C.FechaHorario,C.HoraInicio,C.HoraFin,E.Descripcion as Especialidad,CONCAT(M.Nombres, ' ', M.Apellidos) AS Medico,M.IdMedicoFresalud from Citas as C inner join HorariosMedico as HM ON HM.id_Horario=C.id_Horario inner join Medico as M ON M.id_medico=HM.id_medico INNER JOIN Especialidad E on E.id_especialidad=M.id_especialidad ORDER by C.id_Cita desc");
         
         res.send(result)
 
@@ -149,7 +150,7 @@ try {
         email: "noresponder@clinicalosfresnos.com.pe",
         }
 
-      const result =await apiInstance.sendTransacEmail(sendSmtpEmail);
+      const result =await   apiInstance.sendTransacEmail(sendSmtpEmail);
         /*respuesta correcta*/ 
         res.send({
 
@@ -170,11 +171,13 @@ try {
 
 }catch(error){
 
-     
-      return res.status(500).json({
+
+     console.log(error)
+    return res.status(500).json({
             mensaje:"Error",
             error:error.message
-        })
+    })
+
 
 }
 
@@ -223,32 +226,6 @@ res.status(204).json({
 
 }
 
-export const ActualizarEmpleado=async(req,res)=>{
-
-const {id}=req.params.id
-const {Nombres,Apellidos,Dni,Telefono,Turno,FechaCita}=req.body;
-
-const [result]=pool.query("update Citas Set Nombres=?,Apellidos=?,Dni=?,Telefono=?,Turno=?,FechaCita=? WHERE IdCita=?",
-    [Nombres,Apellidos,Dni,Telefono,Turno,FechaCita,id]
-)
-
-if(result.affectedRows===0){
-
-    return res.status(4040).json({
-
-        message:"Citas no encontrada ni actualizada"
-    })
-
-}
-
-
-/*es decir la geurra*/
-
-const [rows] =await  pool.query("Select * from Citas Where IdCita=?",[id]);
-
-res.json(rows)
-
-}
 export const ActualizarEstadoCita=async(req,res)=>{
 
 const id=req.params.id
@@ -271,4 +248,8 @@ else {
 
         message:"Cita actualizada correctamente"
     })
+}
+
+
+
 }
