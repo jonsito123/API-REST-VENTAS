@@ -487,7 +487,7 @@ const Monto=req.body.Monto
 const Consultorio=req.body.Consultorio    
 
 const [result]=await pool.query("update Citas set Estado=1,Monto=?,Consultorio=? where id_Cita=?",[Monto,Consultorio,id])
-
+ 
 if(result.affectedRows===0){
 
     return res.status(404).json({
