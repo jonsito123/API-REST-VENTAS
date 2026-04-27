@@ -29,5 +29,5 @@ router.post("/HorariosMedicoFecha",ObtenerHorariosPorFechaMedico)
 
 /*actualizar el estado de la cita*/
 
-router.put("/Cita/:id",ActualizarEstadoCita)
+/*router.put("/Cita/:id",ActualizarEstadoCita)*/
 export default router
