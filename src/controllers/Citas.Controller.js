@@ -33,28 +33,6 @@ export const GetCitas=async(req,res)=>{
  
 }
 
-export const CrearCita=async(req,res)=>{
-try {
-   
-    /*paquete para enviar email*/
-
-    const body=req.body;
-    const id_Horario=body.id_Horario
-    const Correo=body.Correo
-    var FechaCreacion=new Date().import { pool } from "../db/conexion.js";
-/*import {Resend} from "resend"*/
-import dotenv from "dotenv"
-/*const resend = new Resend("re_2dtQfq2M_Pdtc4piKUtJaJ6MafXQkszDd");*/
-
-dotenv.config()
-
-import brevo from "@getbrevo/brevo"
-/*proteger las variables de entorno*/ 
-const apiInstance=new brevo.TransactionalEmailsApi();
-apiInstance.setApiKey(
-    brevo.TransactionalEmailsApiApiKeys.apiKey,
-    process.env.KEY_API
-)
 
 export const GetCitas=async(req,res)=>{
 
