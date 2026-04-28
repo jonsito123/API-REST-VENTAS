@@ -60,7 +60,7 @@ try {
     var HoraFin=Horario.HoraFin
     var Medico=Horario.Medico
     var Especialidad=Horario.Especialidad
-    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin,TipoSeguro,FechaCrea) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin,TipoSeguro,now()])
+    const [rows]= await pool.query('INSERT INTO Citas(id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin,TipoSeguro,FechaCrea) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',[id_Horario,FechaCreacion,PacienteNombres,PacienteApellidos,TipoDocumento,NumeroDocumento,Celular,Correo,FechaHorario,HoraInicio,HoraFin,TipoSeguro,FechaCreacion])
        
         /*correo base de mi emisor*/
         /*obtener informacion medico */
