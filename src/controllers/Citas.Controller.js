@@ -90,12 +90,12 @@ try {
         sendSmtpEmail.htmlContent =`
                     <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
                 <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
-                    <h2 style="margin: 0;">Reserva Confirmada</h2>
+                    <h2 style="margin: 0;">Cita por confirmar</h2>
                     <p style="margin: 5px 0 0 0; font-size: 14px;">Clínica Los Fresnos</p>
                 </div>
                 <div style="padding: 20px;">
                     <p>Estimado(a) <strong>${PacienteNombres} ${PacienteApellidos}</strong>,</p>
-                    <p>Su cita médica ha sido registrada exitosamente. A continuación encontrará todos los detalles de su reserva:</p>
+                    <p>Su reserva ha sido registrada. Para confirmar su cita, se le enviará el detalle para realizar su pago: </p>
                     <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
                     <tr style="background-color: #f8fafc;">
                         <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0;">
