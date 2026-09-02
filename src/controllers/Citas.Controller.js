@@ -82,7 +82,7 @@ try {
 
         const sendSmtpEmail = new brevo.SendSmtpEmail();
 
-        sendSmtpEmail.subject = "Reserva Agendada";
+        sendSmtpEmail.subject = "Registro de Reserva Exitoso";
         sendSmtpEmail.to = [
         { email: Correo, name:PacienteNombres},
         //   { email: "fazttech@gmail.com", name: "Joe Mcmillan" },
