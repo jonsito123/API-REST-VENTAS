@@ -87,111 +87,76 @@ try {
         { email: Correo, name:PacienteNombres},
         //   { email: "fazttech@gmail.com", name: "Joe Mcmillan" },
         ];
-        sendSmtpEmail.htmlContent =     `
-                <!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Registro de Reserva Exitoso</title>
-                </head>
-                <body style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f9; color: #333333; margin: 0; padding: 20px;">
-                
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
-                        <tr>
-                            <td align="center">
-                                <div style="max-width: 600px; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e1e8ed; text-align: left;">
-                                    
-                                    <!-- Encabezado -->
-                                    <div style="background-color: #007bc4; padding: 25px 20px; text-align: center; color: white;">
-                                        <h1 style="margin: 0; font-size: 22px; font-weight: 600;">Clínica Los Fresnos</h1>
-                                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 13px;">Portal de Reserva de Citas Web</p>
-                                    </div>
-                
-                                    <!-- Cuerpo -->
-                                    <div style="padding: 25px;">
-                                        <div style="display: inline-block; background-color: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 12px; margin-bottom: 20px;">
-                                            ✓ REGISTRO EXITOSO
-                                        </div>
-                                        
-                                        <p style="font-size: 15px; line-height: 1.5; color: #444444; margin-top: 0; margin-bottom: 20px;">
-                                            Estimado(a) <strong>${PacienteNombres} ${PacienteApellidos}</strong>,<br><br>
-                                            Queremos confirmarle que los datos de su solicitud de atención médica han sido registrados correctamente en nuestro sistema web.
-                                        </p>
-                
-                                        <!-- Bloque 1: Datos del Paciente -->
-                                        <div style="background: #f8fafc; border: 1px solid #e9eff4; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-                                            <div style="font-size: 13px; font-weight: 700; color: #007bc4; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid #e9eff4; padding-bottom: 5px;">
-                                                1. Datos del Paciente Registrados
-                                            </div>
-                                            <table width="100%" cellspacing="0" cellpadding="4" border="0" style="font-size: 14px;">
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Nombre Completo:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">${PacienteNombres} ${PacienteApellidos}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Documento Identidad:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">${TipoDocumento}-${NumeroDocumento}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Celular Contacto:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">${Celular}</td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                
-                                        <!-- Bloque 2: Detalles de la Cita -->
-                                        <div style="background: #f8fafc; border: 1px solid #e9eff4; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-                                            <div style="font-size: 13px; font-weight: 700; color: #007bc4; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid #e9eff4; padding-bottom: 5px;">
-                                                2. Detalles de la Cita
-                                            </div>
-                                            <table width="100%" cellspacing="0" cellpadding="4" border="0" style="font-size: 14px;">
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Especialidad:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">${Especialidad}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Médico Tratante:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">Dr. ${Medico}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Fecha Programada:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">${FechaHorario}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: #666666; font-weight: 500;">Horario Atención:</td>
-                                                    <td align="right" style="color: #111111; font-weight: 600;">${HoraInicio}-${HoraFin}</td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                
-                                        <!-- Bloque Próximos Pasos -->
-                                        <div style="background-color: #fff9db; border-left: 4px solid #f59f00; border-radius: 4px; padding: 15px; margin-bottom: 15px;">
-                                            <div style="font-weight: 700; color: #b06a00; margin-bottom: 8px; font-size: 14px;">📌 ¿Cuáles son los siguientes pasos?</div>
-                                            <ol style="margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.5; color: #665200;">
-                                                <li style="margin-bottom: 6px;"><strong>Contacto por WhatsApp:</strong> Nos comunicaremos con usted al número registrado para brindarle los métodos de pago.</li>
-                                                <li><strong>Plazo de confirmación:</strong> Dispondrá de un lapso máximo de <strong>2 horas</strong> tras recibir el mensaje para realizar el pago.</li>
-                                            </ol>
-                                        </div>
+       sendSmtpEmail.htmlContent =`
+                    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+                <div style="background-color: #0284c7; padding: 20px; text-align: center; color: white;">
+                    <h2 style="margin: 0;">Cita por confirmar</h2>
+                    <p style="margin: 5px 0 0 0; font-size: 14px;">Clínica Los Fresnos</p>
+                </div>
+                <div style="padding: 20px;">
+                    <p>Estimado(a) <strong>${PacienteNombres} ${PacienteApellidos}</strong>,</p>
+                    <p>Su reserva ha sido registrada. Para confirmar su cita, se le enviará el detalle para realizar su pago: </p>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
+                    <tr style="background-color: #f8fafc;">
+                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0;">
+                        <strong style="color: #0369a1; text-transform: uppercase;">1. Datos del Paciente</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Nombre Completo:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${PacienteNombres} ${PacienteApellidos}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Documento Identidad:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">
+                        ${TipoDocumento} - ${NumeroDocumento}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Celular Contacto:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Celular}</td>
+                    </tr>
+                    <tr style="background-color: #f8fafc;">
+                        <td colspan="2" style="padding: 10px; border-bottom: 2px solid #e2e8f0; padding-top: 15px;">
+                        <strong style="color: #0369a1; text-transform: uppercase;">2. Detalles de la Cita</strong>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Especialidad:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${Especialidad}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Médico Tratante:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">Dr ${Medico}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Fecha Programada:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500; color: #0284c7;">${FechaHorario}</td>
+                    </tr>
+                     <tr>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; color: #64748b;">Horario Atención:</td>
+                        <td style="padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${HoraInicio}-${HoraFin}</td>
+                    </tr>
+                    </table>
+                    <br>
+                    <div style="background-color: #fff9db; border-left: 4px solid #f59f00; border-radius: 4px; padding: 15px; margin-bottom: 15px;">
+                        <div style="font-weight: 700; color: #b06a00; margin-bottom: 8px; font-size: 14px;">📌 ¿Cuáles son los siguientes pasos?</div>
+                        <ol style="margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.5; color: #665200;">
+                            <li style="margin-bottom: 6px;"><strong>Contacto por WhatsApp:</strong> Nos comunicaremos con usted al número registrado para brindarle los métodos de pago.</li>
+                            <li><strong>Plazo de confirmación:</strong> Dispondrá de un lapso máximo de <strong>2 horas</strong> tras recibir el mensaje para realizar el pago.</li>
+                        </ol>
+                    </div>
                 
                                         <!-- Alerta Admisión -->
-                                        <div style="background-color: #fce8e6; border-left: 4px solid #d93025; border-radius: 4px; padding: 15px; margin-bottom: 15px; font-size: 13px; line-height: 1.5; color: #a51d14;">
-                                            <strong>⚠️ IMPORTANTE PARA EL DÍA DE SU CITA:</strong><br>
-                                            Preséntese <strong>15 minutos antes</strong>. Es obligatorio portar su <strong>DNI físico</strong> para el proceso de admisión.
-                                        </div>
-                                    </div>
+                    <div style="background-color: #fce8e6; border-left: 4px solid #d93025; border-radius: 4px; padding: 15px; margin-bottom: 15px; font-size: 13px; line-height: 1.5; color: #a51d14;">
+                            <strong>⚠️ IMPORTANTE PARA EL DÍA DE SU CITA:</strong><br>
+                            Preséntese <strong>15 minutos antes</strong>. Es obligatorio portar su <strong>DNI físico</strong> para el proceso de admisión.
+                        </div>
+                    </div>
                 
-                                    <!-- Pie de página -->
-                                    <div style="background: #f1f5f8; padding: 15px; text-align: center; font-size: 11px; color: #777777; border-top: 1px solid #e9eff4;">
-                                        Este es un correo automático, por favor no lo responda.<br>
-                                        Soporte técnico: <a href="mailto:soporte@clinicalosfresnos.com.pe" style="color: #007bc4; text-decoration: none;">soporte@clinicalosfresnos.com.pe</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>   
+                </div>
+            </div>
+                    
             `
        sendSmtpEmail.sender = {
         name: "ClinicaLosFresnos",
